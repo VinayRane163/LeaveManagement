@@ -1,0 +1,76 @@
+﻿@model LeaveManagement.Models.ManagerVM
+@{
+    ViewBag.Title = "Add Manager";
+    Layout = "~/Views/Shared/_admin.cshtml";
+}
+
+<div class="container mt-4">
+    <div class="card col-md-12">
+        @if (TempData["ResponseMSG"] != null)
+        {
+            <label>@TempData["ResponseMSG"].ToString()</label>
+        }
+    </div>
+    <div class="row mt-4">
+
+        <div class="col-md-4">
+            <div class="card shadow-sm p-3">
+                <h4>Add New Manager</h4>
+                @using (Html.BeginForm("AddManager", "Admin", FormMethod.Post))
+                {
+
+                    <div class="mb-3">
+                        @Html.LabelFor(m => m.Manager.Name, new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.Manager.Name, new { @class = "form-control", required = "required" })
+                        @Html.ValidationMessageFor(m => m.Manager.Name)
+                    </div>
+
+                    <div class="mb-3">
+                        @Html.LabelFor(m => m.Manager.Email, new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.Manager.Email, new { @class = "form-control", type = "email", required = "required" })
+                        @Html.ValidationMessageFor(m => m.Manager.Email)
+                    </div>
+
+                    <div class="mb-3">
+                        @Html.LabelFor(m => m.Manager.Password, new { @class = "form-label" })
+                        @Html.PasswordFor(m => m.Manager.Password, new { @class = "form-control", required = "required", minlength = 8 })
+                        @Html.ValidationMessageFor(m => m.Manager.Password)
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100">Save</button>
+                }
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="card shadow-sm p-3">
+                <h4>Existing Managers</h4>
+                <table class="table table-bordered table-hover mt-3">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Password</th>  @*just for demo purposes adding password here*@
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            foreach (var item in Model.ManagerList)
+                            {
+                                <tr>
+                                    <td>@item.Id</td>
+                                    <td>@item.Name</td>
+                                    <td>@item.Email</td>
+                                    <td>@item.Password</td>
+
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,56 @@
+﻿@model List<LeaveManagement.Models.Leave>
+    
+@{
+    ViewBag.Title = "LeaveStatus";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container mt-12">
+    <div class="card col-md-12">
+        @if (TempData["ResponseMSG"] != null)
+        {
+            <label>@TempData["ResponseMSG"].ToString()</label>
+        }
+    </div>
+
+    <div class="col-md-12">
+        <div class="card shadow-sm p-3">
+            <h5>Leave Status</h5>
+            <table class="table table-bordered table-hover mt-3">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>EmpID</th>
+                        <th>EmpName</th>
+                        <th>StartDate</th>
+                        <th>EndDate</th>
+                        <th>Reason</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null)
+                    {
+                        foreach (var i in Model)
+                        {
+                            <tr>
+                                <td>@i.Id</td>
+                                <td>@i.EmployeeId</td>
+                                <td>@i.EmployeeName</td>
+                                <td>@i.StartDate</td>
+                                <td>@i.EndDate</td>
+                                <td>@i.Reason</td>
+                                <td>@i.Status</td>
+
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+</div>
+

@@ -1,0 +1,50 @@
+﻿@model LeaveManagement.Models.Leave
+@{
+    ViewBag.Title = "Apply Leave";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    //DateTime minDate = DateTime.Now.AddYears(-18);
+    //string minDateStr = minDate.ToString("yyyy-MM-dd");
+}
+
+<div class="container mt-4">
+    <div class="card col-md-12">
+        @if (TempData["ResponseMSG"] != null)
+        {
+            <label>@TempData["ResponseMSG"].ToString()</label>
+        }
+    </div>
+    <div class="row mt-11">
+
+        <div class="col-md-11">
+            <div class="card shadow-sm p-3">
+
+                <h4>Apply for Leave : </h4>
+                
+                @using (Html.BeginForm("ApplyLeave", "Employee", FormMethod.Post))
+                {
+                    <div class="mb-3">
+                        <label class="form-label">From Date</label>
+                        @Html.TextBoxFor(m => m.StartDate, new { @type = "date", @class = "form-control" ,Required = "Required" })
+                        @Html.ValidationMessageFor(m => m.StartDate)
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">To Date</label>
+                        @Html.TextBoxFor(m => m.EndDate, new { @type = "date", @class = "form-control", Required = "Required" })
+                        @Html.ValidationMessageFor(m => m.EndDate)
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Reason</label>
+                        @Html.TextBoxFor(m => m.Reason, new { @class = "form-control", Required = "Required" })
+                        @Html.ValidationMessageFor(m => m.Reason)
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100">Save</button>
+                }
+
+            </div>
+        </div>     
+
+    </div>
+</div>

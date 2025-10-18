@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>@ViewBag.Title - Leave Management</title>
+@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/modernizr")
+<style>
+    body, html {
+        height: 100%;
+        margin: 0;
+    }
+
+    .layout-container {
+        display: flex;
+        height: calc(100vh - 60px);
+    }
+
+    .sidebar {
+        width: 25%;
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-right: 1px solid #ddd;
+    }
+
+        .sidebar a {
+            display: block;
+            padding: 10px 0;
+            font-size: 16px;
+            text-decoration: none;
+            color: #000;
+        }
+
+            .sidebar a:hover {
+                text-decoration: underline;
+            }
+
+    .main-content {
+        width: 75%;
+        padding: 20px;
+    }
+</style>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container-fluid">
+        <span class="navbar-brand mb-0 h1">Leave Management</span>
+    </div>
+</nav>
+
+<div class="layout-container">
+    <div class="sidebar">
+        <a href="@Url.Action("Index","Admin")">Dashboard</a>
+        <a href="@Url.Action("AddManager","Admin")">Add Manager</a>
+        <a href="@Url.Action("AddEmployee","Admin")">Add Employee</a>
+        <a href="@Url.Action("Logout","Account")" class="text-danger">Logout</a>
+    </div>
+    <div class="main-content">
+        @RenderBody()
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+@RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,97 @@
+﻿@model LeaveManagement.Models.EmployeeVM
+@{
+    ViewBag.Title = "Add Employee";
+    Layout = "~/Views/Shared/_admin.cshtml";
+    DateTime minDate = DateTime.Now.AddYears(-18);
+    string minDateStr = minDate.ToString("yyyy-MM-dd");
+}
+
+<div class="container mt-4">
+    <div class="card col-md-12">
+        @if (TempData["ResponseMSG"] != null)
+        {
+            <label>@TempData["ResponseMSG"].ToString()</label>
+        }
+    </div>
+    <div class="row mt-4">
+
+        <div class="col-md-4">
+            <div class="card shadow-sm p-3">
+
+                <h4>Add New Employee</h4>
+               
+                @using (Html.BeginForm("AddEmployee", "Admin", FormMethod.Post))
+                {
+
+                    <div class="mb-3">
+                        @Html.LabelFor(m => m.Employee.Name, new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.Employee.Name, new { @class = "form-control", required = "required" })
+                        @Html.ValidationMessageFor(m => m.Employee.Name)
+                    </div>
+
+                    <div class="mb-3">
+                        @Html.LabelFor(m => m.Employee.Email, new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.Employee.Email, new { @class = "form-control",type="email", required = "required" })
+                        @Html.ValidationMessageFor(m => m.Employee.Email)
+                    </div>
+
+                    <div class="mb-3">
+                        @Html.LabelFor(m => m.Employee.Password, new { @class = "form-label" })
+                        @Html.PasswordFor(m => m.Employee.Password, new { @class = "form-control", required = "required",minlength=8 })
+                        @Html.ValidationMessageFor(m => m.Employee.Password)
+                    </div>
+
+                    <div class="mb-3">
+                        @Html.LabelFor(m => m.Employee.DOB, "DOB", new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.Employee.DOB, new { @type = "date", @class = "form-control", @max = @minDateStr, required = "required" })
+                        @Html.ValidationMessageFor(m => m.Employee.DOB)
+                    </div>
+
+                    <div class="mb-3">
+                        @Html.LabelFor(m => m.Employee.ManagerID, "Select Manager", new { @class = "form-label" })
+                        @Html.DropDownListFor(m => m.Employee.ManagerID,
+                            new SelectList(Model.ManagerList, "Id", "Name"),
+                            new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Employee.ManagerID)
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100">Save</button>
+                }
+
+            </div>
+        </div>
+
+        <div class="col-md-7">
+            <div class="card shadow-sm p-3">
+                <h4>Existing Employees</h4>
+                <table class="table table-bordered table-hover mt-3">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Password</th>
+                            <th>Manager</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.EmployeeList != null)
+                        {
+                            foreach (var emp in Model.EmployeeList)
+                            {
+                                <tr>
+                                    <td>@emp.Id</td>
+                                    <td>@emp.Name</td>
+                                    <td>@emp.Email</td>
+                                    <td>@emp.Password</td>
+                                    <td>@emp.ManagerName</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
