@@ -1,4 +1,4 @@
-﻿using LeaveManagement.Models;
+using LeaveManagement.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -20,20 +20,29 @@ namespace LeaveManagement.Controllers
         }
         public ActionResult Index()
         {
-            checkAdminSession();
+            if (Session["EmployeeID"] == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
             return View();
         }
         public ActionResult ApplyLeave()
         {
-            checkAdminSession();
+            if (Session["EmployeeID"] == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
             return View();
         }
         [HttpPost]
         public ActionResult ApplyLeave(Leave Leave)
         {
+            if (Session["EmployeeID"] == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
             if (ModelState.IsValid)
             {
-                checkAdminSession();
                 if (Leave.StartDate > Leave.EndDate)
                 {
                     TempData["ResponseMSG"] = "ToDate should be more than FromDate";
@@ -73,7 +82,10 @@ namespace LeaveManagement.Controllers
 
         public ActionResult LeaveStatus()
         {
-            checkAdminSession();
+            if (Session["EmployeeID"] == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
             SqlConnection con = new SqlConnection(ConnectionString);
             SqlCommand cmd = new SqlCommand("select L.ID,L.FromDate,L.ToDate,L.Reason,LS.Title from Leaves L left join LeaveStatus LS on LS.ID=L.StatusCode where L.EmployeeID=" + Convert.ToInt32(Session["EmployeeID"].ToString()) + " order by id desc", con);
             con.Open();
